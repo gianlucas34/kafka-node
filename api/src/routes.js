@@ -1,13 +1,17 @@
-const express = require('express');
-const producer = require('./producer');
+import express from 'express';
+import { producer } from './producer';
 
 const routes = express.Router();
 
 routes.post('/', async (req, res) => {
+    const message = {
+        name: 'Gian Lucas',
+    }
+
     await producer.send({
-        topic: 'test-topic',
+        topic: 'auth',
         messages: [
-            { value: 'Hello Joy Compras!' },
+            { value: JSON.stringify(message) }
         ],
     })
     await producer.disconnect();
@@ -15,4 +19,4 @@ routes.post('/', async (req, res) => {
     return res.json({ ok: true });
 });
 
-module.exports = routes;
+export default routes;
